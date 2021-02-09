@@ -2,8 +2,8 @@ import React,{useRef,useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import styles from './signup.module.css';
 import Form from '../form/form';
-import {useAuth} from '../../contexts/AuthContext'
- 
+import {useAuth} from '../../contexts/AuthContext';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -31,24 +31,27 @@ export default function Signup() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const confpasswordRef = useRef();
-    const {signup} = useAuth();
+    const {signup,login} = useAuth();
+    const history = useHistory();
     
 
     const [err,setErr] = useState();
     const [loading,setLoading] = useState(false);
+    const [page,setPage] = useState(true);
+    const msg = page?"Already Have an Account?" :"Don't Have an account?"
 
-    async function handleSubmit(e){
+    async function handleSignup(e){
         e.preventDefault();
         console.log('hello')
-        if (!passwordRef.current.value) return setErr("password is required")
         if (passwordRef.current.value !== confpasswordRef.current.value){
             return setErr("Passwords do not match");
         }
-        if (!emailRef.current.value) return setErr("Email is required");
+
         try{
             setLoading(true);
             setErr('');
             await signup(emailRef.current.value,passwordRef.current.value);
+            history.push("/");
         }
         catch(error){
             return setErr("failed to create account");
@@ -57,10 +60,30 @@ export default function Signup() {
         setLoading(false);
     }
 
-    const props = {emailRef,passwordRef,confpasswordRef,loading,err,handleSubmit};
+    async function handleLogin(e){
+        e.preventDefault();
+        console.log('hello')
+        try{
+            setLoading(true);
+            setErr('');
+            await login(emailRef.current.value,passwordRef.current.value);
+            history.push("/");
+        }
+        catch(error){
+            return setErr("failed to create account");
+        }
+        setLoading(false);
+    }
+
+    const handlePage = () => {
+        setPage(!page);
+    }
+
+    const props = {emailRef,passwordRef,confpasswordRef,loading,err,handleSignup,handleLogin};
     return (
     <div className={styles.form}>
-            <Form signup={true} props={props} />
+            <Form signup={page} props={props} />
+            <p>{msg}<button className={styles.toggle} onClick={handlePage}>Click Here</button></p>
       </div>
     );
   }

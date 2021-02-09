@@ -2,15 +2,12 @@ import React from 'react'
 import classes from './form.module.css'
 import {Alert} from "react-bootstrap";
 //pattern="(?=.*\d)(?=.*[a-z])(?=.*[!$%&(-/:-?_{}~])(?=.*[A-Z]).{8,}"
-const Sign = ({emailRef,passwordRef,confpasswordRef,loading,err,handleSubmit}) => {
-    console.log(handleSubmit);
-    let error;
-    if (err==='') error = null;
-    else error = <p>{err}</p>
+const Sign = ({emailRef,passwordRef,confpasswordRef,loading,err,handleSignup}) => {
+    
     return(
         <div className={classes.formContainer}>
             
-            <form className={classes.form} onSubmit={handleSubmit}>
+            <form className={classes.form} onSubmit={handleSignup}>
                 <div id="email" className={classes.inp}>
                     <label htmlFor="email" className={classes.label}>Email Address</label>
                     <input type="email" ref={emailRef} className={classes.input1} placeholder="abc@xyz.pqr" required></input> 
@@ -34,18 +31,19 @@ const Sign = ({emailRef,passwordRef,confpasswordRef,loading,err,handleSubmit}) =
     );
 }
 
-const Login = ({emailRef,passwordRef,loading,err}) => {
+const Login = ({emailRef,passwordRef,loading,err,handleLogin}) => {
     return (
     <div className={classes.formContainer}>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit = {handleLogin}>
             <div id="email" className={classes.inp}>
                 <label htmlFor="email" className={classes.label}>Email Address</label><br></br>
                 <input type="email" ref={emailRef} className={classes.input1} placeholder="abc@xyz.pqr"></input> 
             </div>
             <div id="password" className={classes.inp}>
                 <label htmlFor="password1" className={classes.label}>Password</label><br></br>
-                <input type="password" ref={passwordRef} className={classes.input1} id="password1" pattern="(?=.*\d)(?=.*[a-z])(?=.*[!$%&(-/:-?_{}~])(?=.*[A-Z]).{8,}"></input> 
+                <input type="password" ref={passwordRef} className={classes.input1} id="password1" ></input> 
             </div>
+            {err && <Alert variant="danger">{err}</Alert>}
             <div id="button">
                     <button type="submit" className={classes.button} disabled={loading}>
                         Submit
@@ -58,7 +56,6 @@ const Login = ({emailRef,passwordRef,loading,err}) => {
 
 
 export default function Form({signup,props}) {
-    console.log(props)
     if (signup){
         return <Sign {...props}/>
     }
