@@ -1,0 +1,62 @@
+.inp{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+}
+
+.inp:focus{
+    
+    transition: 0.5s;
+}
+
+.formContainer{
+    height: 100%;
+}
+
+.form{
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.label{
+    position: absolute;
+    transform: translateY(-1.5rem);
+}
+
+.input1{
+    height: 1.5rem;
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+}
+
+.input1:focus{
+    border-bottom: 1px solid rgba(15,194,108,1);
+    -webkit-box-shadow: 0px 3px 5px -2px rgba(15,194,108,0.2);
+    -moz-box-shadow: 0px 3px 5px -2px rgba(15,194,108,0.2);
+    box-shadow: 0px 3px 5px -2px rgba(15,194,108,0.2);
+}
+
+.button{
+    width: 100%;
+    height: 2rem;
+    margin-bottom: -10rem;
+    color: white;
+    background-color: rgba(13, 132, 230, 0.795);
+    border: none;
+    border-radius: 4px;
+    -webkit-box-shadow: -2px 2px 13px 0px rgba(0,0,0,0.3);
+    -moz-box-shadow: -2px 2px 13px 0px rgba(0,0,0,0.3);
+    box-shadow: -2px 2px 13px 0px rgba(0,0,0,0.3);
+    cursor: pointer;
+    outline: none;
+}
+
+.button:focus{
+    background-color: rgba(11, 107, 185, 0.795);
+}
