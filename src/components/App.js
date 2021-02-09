@@ -2,6 +2,7 @@ import './App.css';
 import Signup from './signup/signup'
 import Dashboard from './dashboard/dashboard'
 import {AuthProvider} from '../contexts/AuthContext'
+import PrivateRoute from './PrivateRoute'
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
       <AuthProvider>
         <Switch>
           <Route path="/signup" component={Signup}></Route>
-          <Route exact path="/" component={Dashboard}></Route>
+          <PrivateRoute exact path="/" component={Dashboard}></PrivateRoute>
         </Switch>
       </AuthProvider>
     </Router>
