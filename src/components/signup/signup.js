@@ -70,7 +70,7 @@ export default function Signup() {
             history.push("/");
         }
         catch(error){
-            return setErr("failed to create account");
+            return setErr("failed to Login");
         }
         setLoading(false);
     }

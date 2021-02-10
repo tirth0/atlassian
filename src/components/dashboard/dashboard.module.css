@@ -1,0 +1,9 @@
+.cardContainer{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 3rem;
+}
+
+.card{
+    margin: 20px;
+}
