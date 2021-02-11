@@ -14,7 +14,7 @@ const CardTable = ({data}) =>{
         <Card.Body>
           <Card.Title>{elem.title}</Card.Title>
           <Card.Text>
-            {elem.content}
+            {elem.description}
           </Card.Text>
           <Link to={elem.link} variant="btn-primary primary">Go somewhere</Link>
         </Card.Body>
@@ -35,36 +35,7 @@ export default function Dashboard() {
     const [err,setErr] = useState('');
     const [ct,setCt] = useState(0);
     const url = "http://localhost:8080"
-    const [data,setData] = useState([
-        {
-            title : "Discrete Maths",
-            content : `Assignments for the session 2021-2022`,
-            link : '/',
-            key : 'ASDCSWDS'
-        },
-        {
-            title : "Data Structures",
-            content : `Assignments for the session 2021-2022`,
-            link : '/',
-            key : 'ASWESDS'
-        },
-        {
-            title : "Data Communications",
-            content : `Assignments for the session 2021-2022`,
-            link : '/'
-
-        },
-        {
-            title : "Mathematics",
-            content : `Assignments for the session 2021-2022`,
-            link : '/'
-        },
-        {
-            title : "Computer Organisation",
-            content : `Assignments for the session 2021-2022`,
-            link : '/'
-        }
-    ]);
+    const [data,setData] = useState([]);
     const history = useHistory();
     const currentUser = useAuth();
 
@@ -83,7 +54,8 @@ export default function Dashboard() {
             user : currentUser.currentUser.email
         })
         .then(res=>{
-            console.log(res);
+            console.log(res.data);
+            setData(res.data);
         })
         .catch(error=>{
             console.log(error);
@@ -91,14 +63,15 @@ export default function Dashboard() {
     },[]);
 
     const addClassroom = () => {
-        
         let newData = data;
         let body = {
             user : currentUser.currentUser.email
         }
         axios.post(`${url}/addclassRoom`,body)
         .then(res=>{
-            console.log(res.statusText);
+            console.log(res.data);
+            setData([...data,res.data]);
+
         })
         .catch(error=>{
             console.log(error);
