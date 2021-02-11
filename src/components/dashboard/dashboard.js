@@ -3,6 +3,7 @@ import {useHistory,Link} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 import {Card,Button} from 'react-bootstrap'
 import classes from './dashboard.module.css'
+import axios from 'axios';
 
 
 const CardTable = ({data}) =>{
@@ -64,6 +65,7 @@ export default function Dashboard() {
         }
     ]);
     const history = useHistory();
+    const currentUser = useAuth();
 
     async function handleLogout(){
         setErr('');
@@ -77,18 +79,19 @@ export default function Dashboard() {
     }
 
     const addClassroom = () => {
-        const key = Math.random().toString(36).substring(6);
+        
         let newData = data;
-        console.log('new state')
-        const classroom = {
-            title : 'Data Structures Lab',
-            content : 'Assignments for the session 2021-2022',
-            link : '/',
-            key : key
+        let body = {
+            currentUser : currentUser.currentUser.email
         }
-        newData.push(classroom);
-        setData(newData);
-        setCt(ct+1);
+        axios.post('http://localhost:8080/addclassRoom',body)
+        .then(res=>{
+            console.log(res.statusText);
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+        
     }
     return (
         <div>
