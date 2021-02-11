@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import {useHistory,Link} from 'react-router-dom'
 import {useAuth} from '../../contexts/AuthContext'
 import {Card,Button} from 'react-bootstrap'
@@ -34,6 +34,7 @@ export default function Dashboard() {
     const {logout} = useAuth();
     const [err,setErr] = useState('');
     const [ct,setCt] = useState(0);
+    const url = "http://localhost:8080"
     const [data,setData] = useState([
         {
             title : "Discrete Maths",
@@ -77,14 +78,25 @@ export default function Dashboard() {
             setErr('Failed to Logout');
         }
     }
+    useEffect(()=>{
+        axios.post(`${url}/classroomList`,{
+            user : currentUser.currentUser.email
+        })
+        .then(res=>{
+            console.log(res);
+        })
+        .catch(error=>{
+            console.log(error);
+        });
+    },[]);
 
     const addClassroom = () => {
         
         let newData = data;
         let body = {
-            currentUser : currentUser.currentUser.email
+            user : currentUser.currentUser.email
         }
-        axios.post('http://localhost:8080/addclassRoom',body)
+        axios.post(`${url}/addclassRoom`,body)
         .then(res=>{
             console.log(res.statusText);
         })
